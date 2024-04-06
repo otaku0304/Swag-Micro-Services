@@ -1,4 +1,7 @@
 spring:
+  application:
+    name: swagger-service
+
   servlet:
     multipart:
       max-file-size: 5MB
@@ -7,6 +10,9 @@ spring:
     mongodb:
       database: Cluster0
       uri: mongodb+srv://saikrishnachaitanya61:aHnSnFTy2JI7X2V0@cluster0.pivbjqp.mongodb.net/?retryWrites=true&w=majority
+
+server:
+  port: 8082
 
 swag:
   service:

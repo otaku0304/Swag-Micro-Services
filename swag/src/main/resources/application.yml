@@ -1,3 +1,10 @@
+spring:
+  application:
+    name: swag-service
+
+server:
+  port: 8081
+
 firebase:
   config-file: firebase.json
 
