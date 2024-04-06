@@ -1,4 +1,4 @@
-package swagger.dto;
+package com.swagger.dto;
 
 import lombok.Getter;
 import lombok.Setter;

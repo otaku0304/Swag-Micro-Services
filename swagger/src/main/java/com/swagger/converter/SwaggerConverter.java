@@ -1,8 +1,8 @@
-package swagger.converter;
+package com.swagger.converter;
 
-import swagger.dto.SwaggerDTO;
-import swagger.entity.Swagger;
-import swagger.utils.Utility;
+import com.swagger.dto.SwaggerDTO;
+import com.swagger.entity.Swagger;
+import com.swagger.utils.Utility;
 
 public class SwaggerConverter {
 

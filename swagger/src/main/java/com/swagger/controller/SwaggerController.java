@@ -1,12 +1,12 @@
-package swagger.controller;
+package com.swagger.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import swagger.dto.HttpResponseDTO;
-import swagger.dto.SwaggerDTO;
-import swagger.service.SwaggerService;
+import com.swagger.dto.HttpResponseDTO;
+import com.swagger.dto.SwaggerDTO;
+import com.swagger.service.SwaggerService;
 
 @CrossOrigin
 @RestController
@@ -23,44 +23,26 @@ class SwaggerController {
     @PostMapping(value = "/save")
     public ResponseEntity<HttpResponseDTO> saveSwagger(@RequestBody final SwaggerDTO swagDTO) {
         HttpResponseDTO httpResponseDTO = swaggerService.save(swagDTO);
-        if (httpResponseDTO.getResponseCode() == 201) {
-            return new ResponseEntity<>(httpResponseDTO, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(httpResponseDTO, HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(httpResponseDTO, HttpStatus.valueOf(httpResponseDTO.getResponseCode()));
     }
 
     @GetMapping(value = "/fetch")
     public ResponseEntity<HttpResponseDTO> fetch(@RequestParam final String user) {
         HttpResponseDTO httpResponseDTO = swaggerService.fetch(user);
-        if (httpResponseDTO.getResponseCode() == 201) {
-            return new ResponseEntity<>(httpResponseDTO, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(httpResponseDTO, HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(httpResponseDTO, HttpStatus.valueOf(httpResponseDTO.getResponseCode()));
     }
 
     @GetMapping(value = "/fetch-swag")
     public ResponseEntity<HttpResponseDTO> fetchSwag(@RequestParam final String user) {
         HttpResponseDTO httpResponseDTO = swaggerService.fetchSwag(user);
-        if (httpResponseDTO.getResponseCode() == HttpStatus.CREATED.value()) {
-            return new ResponseEntity<>(httpResponseDTO, HttpStatus.CREATED);
-        } else if (httpResponseDTO.getResponseCode() == HttpStatus.NOT_FOUND.value()) {
-            return new ResponseEntity<>(httpResponseDTO, HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(httpResponseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return new ResponseEntity<>(httpResponseDTO, HttpStatus.valueOf(httpResponseDTO.getResponseCode()));
     }
 
 
     @GetMapping(value = "/fetch-swaggest")
     public ResponseEntity<HttpResponseDTO> fetchSwaggest(@RequestParam final String user) {
         HttpResponseDTO httpResponseDTO = swaggerService.fetchSwaggest(user);
-        if (httpResponseDTO.getResponseCode() == 201) {
-            return new ResponseEntity<>(httpResponseDTO, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(httpResponseDTO, HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(httpResponseDTO, HttpStatus.valueOf(httpResponseDTO.getResponseCode()));
     }
 }
 

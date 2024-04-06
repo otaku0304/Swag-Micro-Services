@@ -1,4 +1,4 @@
-package swagger.entity;
+package com.swagger.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

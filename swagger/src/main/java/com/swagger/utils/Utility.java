@@ -1,7 +1,7 @@
-package swagger.utils;
+package com.swagger.utils;
 
+import com.swagger.entity.GenericDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import swagger.entity.GenericDetails;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;

@@ -1,5 +1,10 @@
-package swagger.service;
+package com.swagger.service;
 
+import com.swagger.converter.SwaggerConverter;
+import com.swagger.dto.HttpResponseDTO;
+import com.swagger.dto.SwaggerDTO;
+import com.swagger.entity.Swagger;
+import com.swagger.repository.SwaggerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -7,11 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
-import swagger.converter.SwaggerConverter;
-import swagger.dto.HttpResponseDTO;
-import swagger.dto.SwaggerDTO;
-import swagger.entity.Swagger;
-import swagger.repository.SwaggerRepository;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/com/swag")
+@RequestMapping("/swag")
 public class SwagController {
 
     private final SwagService swagService;
@@ -48,7 +48,7 @@ public class SwagController {
        return new ResponseEntity<>(httpResponseDTO, HttpStatus.valueOf(httpResponseDTO.getResponseCode()));
     }
 
-    @DeleteMapping("/user-delete-swag-content")
+    @DeleteMapping("/delete")
     public ResponseEntity<HttpResponseDTO> deleteSwagForUser(@RequestBody final SwagDTO swagDTO) throws InterruptedException, ExecutionException {
         HttpResponseDTO httpResponseDTO = swagService.deleteSwagForUser(swagDTO);
         return new ResponseEntity<>(httpResponseDTO, HttpStatus.valueOf(httpResponseDTO.getResponseCode()));
