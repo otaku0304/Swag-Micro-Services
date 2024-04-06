@@ -1,0 +1,17 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 15MB
+  data:
+    mongodb:
+      database: Cluster0
+      uri: mongodb+srv://saikrishnachaitanya61:aHnSnFTy2JI7X2V0@cluster0.pivbjqp.mongodb.net/?retryWrites=true&w=majority
+
+swag:
+  service:
+    url: http://localhost:8081/
+
+swaggest:
+  service:
+    url: http://localhost:8083/
