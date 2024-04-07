@@ -1,6 +1,6 @@
 spring:
   application:
-    name: swagger-service
+    name: swaggest-service
 
   servlet:
     multipart:
@@ -25,11 +25,3 @@ spring:
 
 server:
   port: 8083
-
-swag:
-  service:
-    url: http://localhost:8081/
-
-swagger:
-  service:
-    url: http://localhost:8082/

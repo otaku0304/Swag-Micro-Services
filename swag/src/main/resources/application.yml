@@ -4,14 +4,3 @@ spring:
 
 server:
   port: 8081
-
-firebase:
-  config-file: firebase.json
-
-swagger:
-  service:
-    url: http://localhost:8082/
-
-swaggest:
-  service:
-    url: http://localhost:8083/
