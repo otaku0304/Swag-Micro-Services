@@ -9,7 +9,7 @@ spring:
   data:
     mongodb:
       database: Cluster0
-      uri: mongodb+srv://saikrishnachaitanya61:aHnSnFTy2JI7X2V0@cluster0.pivbjqp.mongodb.net/?retryWrites=true&w=majority
+      uri: mongodb+srv://saiannam:QbMf0GRbWc662ofD@cluster0.zq8sjqk.mongodb.net/?retryWrites=true&w=majority
 
 server:
   port: 8082
