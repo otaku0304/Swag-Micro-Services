@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: config
+  profile:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/otaku0304/config-server
+server:
+  port: 8888
+

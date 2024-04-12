@@ -1,0 +1,23 @@
+firebase:
+  config-file: firebase.json
+
+swag:
+  service:
+    url: http://localhost:8081/
+
+swagger:
+  service:
+    url: http://localhost:8082/
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 15MB
+  data:
+    mongodb:
+      database: Cluster0
+      url: mongodb+srv://saiannam:QbMf0GRbWc662ofD@cluster0.zq8sjqk.mongodb.net/?retryWrites=true&w=majority
+
+swaggest:
+  service:
+    url: http://localhost:8083/
