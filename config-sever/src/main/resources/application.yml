@@ -6,7 +6,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/otaku0304/config-server
+          uri: https://github.com/otaku0304/Swag-Micro-Services
 server:
   port: 8888
 
