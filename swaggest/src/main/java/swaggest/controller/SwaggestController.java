@@ -24,9 +24,9 @@ public class SwaggestController {
     }
 
     @PostMapping(value = "/save")
-    public ResponseEntity<HttpResponseDTO> save( @RequestBody final SwaggestDTO swagDTO)  {
-        log.info("swaggest-controller: {}", swagDTO);
-        HttpResponseDTO  httpResponseDTO = swaggestService.save(swagDTO);
+    public ResponseEntity<HttpResponseDTO> save( @RequestBody final SwaggestDTO swaggestDTO)  {
+        log.info("swaggest-controller: {}", swaggestDTO);
+        HttpResponseDTO  httpResponseDTO = swaggestService.save(swaggestDTO);
         return new ResponseEntity<>(httpResponseDTO, HttpStatus.valueOf(httpResponseDTO.getResponseCode()));
     }
 

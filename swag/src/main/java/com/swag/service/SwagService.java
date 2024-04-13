@@ -8,6 +8,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import com.swag.GlobalExceptionsHandler.SwaggestServiceException;
 import com.swag.converter.SwagConverter;
@@ -24,8 +25,8 @@ import java.util.concurrent.ExecutionException;
 @Service
 @Slf4j
 public class SwagService {
-    @Value("${swaggest.service.url}")
-    private String swaggestServiceUrl;
+    @Value("${swaggest.service.appName}")
+    private String swaggestServiceAppName;
     @Value("${swagger.service.url}")
     private String swaggerServiceUrl;
     private final Firestore firestore;
@@ -86,21 +87,21 @@ public class SwagService {
         return httpResponseDTO;
     }
 
-    public HttpResponseDTO saveSwagger(SwagDTO swagDTO) {
+    public HttpResponseDTO saveSwagger(final SwagDTO swagDTO) {
         String url = swaggerServiceUrl + "/swagger/save";
         ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.postForEntity(url, swagDTO, HttpResponseDTO.class);
         return responseEntity.getBody();
     }
 
-    public HttpResponseDTO saveSwaggest(SwaggestDTO swaggestDTO) {
+    public HttpResponseDTO saveSwaggest(final SwaggestDTO swaggestDTO) {
         try {
             log.info("swaggest-body:" + swaggestDTO);
-            String url = swaggestServiceUrl + "/swaggest/save";
+            String url = swaggestServiceAppName + "/swaggest/save";
             ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.postForEntity(url, swaggestDTO, HttpResponseDTO.class);
             log.info("swaggest-body:" + responseEntity);
             return responseEntity.getBody();
-        } catch (Exception ex) {
-            throw new SwaggestServiceException("Swaggest data is empty. Please send the data");
+        } catch (RestClientException ex){
+            throw new SwaggestServiceException(ex.getMessage(), ex);
         }
     }
 

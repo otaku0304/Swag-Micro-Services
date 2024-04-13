@@ -37,15 +37,15 @@ public class SwaggestService {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-    public HttpResponseDTO save(final SwaggestDTO swagDTO) {
-        log.info("Swaggest content:" + swagDTO.getSwaggestContent());
-        log.info("User:" + swagDTO.getUser());
+    public HttpResponseDTO save(final SwaggestDTO swaggestDTO) {
+        log.info("Swaggest content:" + swaggestDTO.getSwaggestContent());
+        log.info("User:" + swaggestDTO.getUser());
         HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
-        if (swagDTO.isEmpty()) {
-            log.info("Has null or empty:" + swagDTO);
+        if (swaggestDTO.isEmpty()) {
+            log.info("Has null or empty:" + swaggestDTO);
             return Utility.setResponseCodeAndMessage(httpResponseDTO, 400, "Swaggest data is empty.");
         }
-        Swaggest swag = swaggestRepository.save(SwaggestConverter.convertSwagDTOtoEntity(swagDTO));
+        Swaggest swag = swaggestRepository.save(SwaggestConverter.convertSwagDTOtoEntity(swaggestDTO));
         if (!ObjectUtils.isEmpty(swag)) {
             return Utility.setResponseCodeAndMessage(httpResponseDTO, 201, "Swaggest created successfully.");
         }
