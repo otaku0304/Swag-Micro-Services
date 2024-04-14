@@ -69,8 +69,8 @@ public class SwaggestService {
     }
 
     public HttpResponseDTO callFetchSwag(final String user) {
+        String url = swagServiceUrl + "/swag/fetch-swag?user=" + user;
         try {
-            String url = swagServiceUrl + "/swag/fetch-swag?user=" + user;
             ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.getForEntity(url, HttpResponseDTO.class);
             return responseEntity.getBody();
         } catch (RestClientException ex) {
@@ -79,8 +79,8 @@ public class SwaggestService {
     }
 
     public HttpResponseDTO callFetchSwagger(final String user) {
+        String url = swaggerServiceUrl + "/swagger/fetch-swagger?user=" + user;
         try {
-            String url = swaggerServiceUrl + "/swagger/fetch-swagger?user=" + user;
             ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.getForEntity(url, HttpResponseDTO.class);
             return responseEntity.getBody();
         } catch (RestClientException ex) {

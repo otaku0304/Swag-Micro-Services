@@ -90,8 +90,8 @@ public class SwagService {
     }
 
     public HttpResponseDTO saveSwagger(final SwagDTO swagDTO) {
+        String url = swaggerServiceUrl + "/swagger/save";
         try {
-            String url = swaggerServiceUrl + "/swagger/save";
             ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.postForEntity(url, swagDTO, HttpResponseDTO.class);
             return responseEntity.getBody();
         } catch (RestClientException ex) {
@@ -100,8 +100,8 @@ public class SwagService {
     }
 
     public HttpResponseDTO saveSwaggest(final SwaggestDTO swaggestDTO) {
+        String url = swaggestServiceAppName + "/swaggest/save";
         try {
-            String url = swaggestServiceAppName + "/swaggest/save";
             ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.postForEntity(url, swaggestDTO, HttpResponseDTO.class);
             return responseEntity.getBody();
         } catch (RestClientException ex) {
