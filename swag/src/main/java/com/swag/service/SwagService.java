@@ -5,6 +5,7 @@ import com.google.cloud.firestore.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -30,6 +31,7 @@ public class SwagService {
     @Value("${swagger.service.url}")
     private String swaggerServiceUrl;
     private final Firestore firestore;
+    @LoadBalanced
     private final RestTemplate restTemplate;
 
     public SwagService(Firestore firestore, RestTemplateBuilder restTemplateBuilder) {

@@ -31,7 +31,6 @@ public class SwaggestService {
     private final RestTemplate restTemplate;
     private final SwaggestRepository swaggestRepository;
 
-    @Autowired
     public SwaggestService(SwaggestRepository swaggestRepository, RestTemplateBuilder restTemplateBuilder) {
         this.swaggestRepository = swaggestRepository;
         this.restTemplate = restTemplateBuilder.build();

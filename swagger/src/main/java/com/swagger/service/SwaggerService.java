@@ -25,7 +25,6 @@ public class SwaggerService {
     private final RestTemplate restTemplate;
     private final SwaggerRepository swaggerRepository;
 
-    @Autowired
     public SwaggerService(SwaggerRepository swaggerRepository, RestTemplateBuilder restTemplateBuilder) {
         this.swaggerRepository = swaggerRepository;
         this.restTemplate = restTemplateBuilder.build();
@@ -45,7 +44,7 @@ public class SwaggerService {
         return httpResponseDTO;
     }
 
-    public HttpResponseDTO fetch(String user) {
+    public HttpResponseDTO fetch(final String user) {
         HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
         List<Swagger> swaggerList = swaggerRepository.findByUser(user);
         if (!swaggerList.isEmpty()) {
