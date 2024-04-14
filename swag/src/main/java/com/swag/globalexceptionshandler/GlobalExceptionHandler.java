@@ -1,4 +1,4 @@
-package com.swag.GlobalExceptionsHandler;
+package com.swag.globalexceptionshandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +26,8 @@ public class GlobalExceptionHandler {
                 .body(responseDTO);
     }
 
-    @ExceptionHandler(SwaggestServiceException.class)
-    public ResponseEntity<HttpResponseDTO> handleSwaggestServiceException(SwaggestServiceException ex) {
+    @ExceptionHandler(SwagServiceException.class)
+    public ResponseEntity<HttpResponseDTO> handleSwaggestServiceException(SwagServiceException ex) {
         log.error("Error occurred in Swaggest service: {}", ex.getMessage());
         HttpResponseDTO responseDTO = new HttpResponseDTO();
         responseDTO.setResponseMessage(ex.getMessage());

@@ -1,4 +1,4 @@
-package com.swag.GlobalExceptionsHandler;
+package swaggest.globalexceptionshandler;
 
 public class SwaggestServiceException extends RuntimeException {
 

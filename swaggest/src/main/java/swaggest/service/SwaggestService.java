@@ -1,14 +1,14 @@
 package swaggest.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import swaggest.globalexceptionshandler.SwaggestServiceException;
 import swaggest.converter.SwaggestConverter;
 import swaggest.dto.HttpResponseDTO;
 import swaggest.dto.SwaggestDTO;
@@ -37,11 +37,8 @@ public class SwaggestService {
     }
 
     public HttpResponseDTO save(final SwaggestDTO swaggestDTO) {
-        log.info("Swaggest content:" + swaggestDTO.getSwaggestContent());
-        log.info("User:" + swaggestDTO.getUser());
         HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
         if (swaggestDTO.isEmpty()) {
-            log.info("Has null or empty:" + swaggestDTO);
             return Utility.setResponseCodeAndMessage(httpResponseDTO, 400, "Swaggest data is empty.");
         }
         Swaggest swag = swaggestRepository.save(SwaggestConverter.convertSwagDTOtoEntity(swaggestDTO));
@@ -70,15 +67,24 @@ public class SwaggestService {
         }
         return httpResponseDTO;
     }
+
     public HttpResponseDTO callFetchSwag(final String user) {
-        String url = swagServiceUrl + "/swag/fetch-swag?user=" + user;
-        ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.getForEntity(url, HttpResponseDTO.class);
-        return responseEntity.getBody();
+        try {
+            String url = swagServiceUrl + "/swag/fetch-swag?user=" + user;
+            ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.getForEntity(url, HttpResponseDTO.class);
+            return responseEntity.getBody();
+        } catch (RestClientException ex) {
+            throw new SwaggestServiceException(ex.getMessage(), ex);
+        }
     }
 
     public HttpResponseDTO callFetchSwagger(final String user) {
-        String url = swaggerServiceUrl + "/swagger/fetch-swagger?user=" + user;
-        ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.getForEntity(url, HttpResponseDTO.class);
-        return responseEntity.getBody();
+        try {
+            String url = swaggerServiceUrl + "/swagger/fetch-swagger?user=" + user;
+            ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.getForEntity(url, HttpResponseDTO.class);
+            return responseEntity.getBody();
+        } catch (RestClientException ex) {
+            throw new SwaggestServiceException(ex.getMessage(), ex);
+        }
     }
 }

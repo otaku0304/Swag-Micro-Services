@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import com.swag.GlobalExceptionsHandler.SwaggestServiceException;
+import com.swag.globalexceptionshandler.SwagServiceException;
 import com.swag.converter.SwagConverter;
 import com.swag.dto.HttpResponseDTO;
 import com.swag.dto.SwagDTO;
@@ -90,23 +90,24 @@ public class SwagService {
     }
 
     public HttpResponseDTO saveSwagger(final SwagDTO swagDTO) {
-        String url = swaggerServiceUrl + "/swagger/save";
-        ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.postForEntity(url, swagDTO, HttpResponseDTO.class);
-        return responseEntity.getBody();
+        try {
+            String url = swaggerServiceUrl + "/swagger/save";
+            ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.postForEntity(url, swagDTO, HttpResponseDTO.class);
+            return responseEntity.getBody();
+        } catch (RestClientException ex) {
+            throw new SwagServiceException(ex.getMessage(), ex);
+        }
     }
 
     public HttpResponseDTO saveSwaggest(final SwaggestDTO swaggestDTO) {
         try {
-            log.info("swaggest-body:" + swaggestDTO);
             String url = swaggestServiceAppName + "/swaggest/save";
             ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.postForEntity(url, swaggestDTO, HttpResponseDTO.class);
-            log.info("swaggest-body:" + responseEntity);
             return responseEntity.getBody();
-        } catch (RestClientException ex){
-            throw new SwaggestServiceException(ex.getMessage(), ex);
+        } catch (RestClientException ex) {
+            throw new SwagServiceException(ex.getMessage(), ex);
         }
     }
-
 
     public HttpResponseDTO deleteSwagForUser(final SwagDTO swagDTO) throws InterruptedException, ExecutionException {
         HttpResponseDTO httpResponseDTO = new HttpResponseDTO();

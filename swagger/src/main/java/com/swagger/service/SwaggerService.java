@@ -1,16 +1,17 @@
 package com.swagger.service;
 
+import com.swagger.globalexceptionshandler.SwaggerServiceException;
 import com.swagger.converter.SwaggerConverter;
 import com.swagger.dto.HttpResponseDTO;
 import com.swagger.dto.SwaggerDTO;
 import com.swagger.entity.Swagger;
 import com.swagger.repository.SwaggerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -63,16 +64,18 @@ public class SwaggerService {
     }
 
     public HttpResponseDTO fetchSwag(final String user) {
-        String url = swagServiceUrl + "/swag/fetch?user=" + user;
-        ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.getForEntity(url, HttpResponseDTO.class);
-        return responseEntity.getBody();
+        try {
+            String url = swagServiceUrl + "/swag/fetch?user=" + user;
+            ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.getForEntity(url, HttpResponseDTO.class);
+            return responseEntity.getBody();
+        } catch (RestClientException ex) {
+            throw new SwaggerServiceException(ex.getMessage(), ex);
+        }
     }
-
 
     public HttpResponseDTO fetchSwaggest(final String user) {
         String url = swaggestServiceUrl + "/swaggest/fetch?user=" + user;
         ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.getForEntity(url, HttpResponseDTO.class);
         return responseEntity.getBody();
     }
-
 }
