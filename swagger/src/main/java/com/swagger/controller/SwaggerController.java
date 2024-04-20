@@ -38,7 +38,6 @@ class SwaggerController {
         return new ResponseEntity<>(httpResponseDTO, HttpStatus.valueOf(httpResponseDTO.getResponseCode()));
     }
 
-
     @GetMapping(value = "/fetch-swaggest")
     public ResponseEntity<HttpResponseDTO> fetchSwaggest(@RequestParam final String user) {
         HttpResponseDTO httpResponseDTO = swaggerService.fetchSwaggest(user);

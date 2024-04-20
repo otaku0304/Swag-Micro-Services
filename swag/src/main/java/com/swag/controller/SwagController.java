@@ -1,5 +1,6 @@
 package com.swag.controller;
 
+import com.swag.dto.SwaggerDTO;
 import com.swag.service.SwagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,8 +38,8 @@ public class SwagController {
     }
 
     @PostMapping(value = "/save-swagger")
-    public ResponseEntity<HttpResponseDTO> saveSwagger(@RequestBody final SwagDTO swagDTO) {
-        HttpResponseDTO httpResponseDTO = swagService.saveSwagger(swagDTO);
+    public ResponseEntity<HttpResponseDTO> saveSwagger(@RequestBody final SwaggerDTO swaggerDTO) {
+        HttpResponseDTO httpResponseDTO = swagService.saveSwagger(swaggerDTO);
        return new ResponseEntity<>(httpResponseDTO, HttpStatus.valueOf(httpResponseDTO.getResponseCode()));
     }
 

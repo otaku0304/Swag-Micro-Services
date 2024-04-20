@@ -6,6 +6,7 @@ import com.swagger.dto.HttpResponseDTO;
 import com.swagger.dto.SwaggerDTO;
 import com.swagger.entity.Swagger;
 import com.swagger.repository.SwaggerRepository;
+import com.swagger.utils.Utility;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
@@ -33,34 +34,30 @@ public class SwaggerService {
 
     public HttpResponseDTO save(final SwaggerDTO swaggerDTO) {
         HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
+        if(ObjectUtils.isEmpty(swaggerDTO.getSwaggerContent()) || ObjectUtils.isEmpty(swaggerDTO.getUser()) ){
+            return Utility.setResponseCodeAndMessage(httpResponseDTO, 400, "Swagger data is empty.");
+        }
         Swagger swag = swaggerRepository.save(SwaggerConverter.convertSwaggerDTOtoEntity(swaggerDTO));
         if (!ObjectUtils.isEmpty(swag)) {
-            httpResponseDTO.setResponseCode(201);
-            httpResponseDTO.setResponseMessage("Swagger Saved successfully");
-        } else {
-            httpResponseDTO.setResponseCode(400);
-            httpResponseDTO.setResponseMessage("BAD Request");
-            return httpResponseDTO;
+            return Utility.setResponseCodeAndMessage(httpResponseDTO, 201, "Swagger saved successfully ");
         }
         return httpResponseDTO;
     }
 
     public HttpResponseDTO fetch(final String user) {
         HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
-        List<Swagger> swaggerList = swaggerRepository.findByUser(user);
-        if (!swaggerList.isEmpty()) {
-            List<String> swaggerContents = new ArrayList<>();
-            for (Swagger swagger : swaggerList) {
-                swaggerContents.add(swagger.getSwaggerContent());
-            }
-            httpResponseDTO.setResponseCode(200);
-            httpResponseDTO.setResponseMessage("STATUS_200");
-            httpResponseDTO.setResponseBody(swaggerContents);
-        } else {
-            httpResponseDTO.setResponseCode(404);
-            httpResponseDTO.setResponseMessage("STATUS_404: User not found");
+        if(ObjectUtils.isEmpty(user)){
+            return Utility.setResponseCodeAndMessage(httpResponseDTO, 400, "User is empty.");
         }
-        return httpResponseDTO;
+        List<Swagger> swaggerList = swaggerRepository.findByUser(user);
+        if (swaggerList.isEmpty()) {
+            return Utility.setResponseCodeAndMessage(httpResponseDTO, 404, "STATUS_404: User not found");
+        }
+        List<String> swaggerContents = new ArrayList<>();
+        for (Swagger swagger : swaggerList) {
+            swaggerContents.add(swagger.getSwaggerContent());
+        }
+        return Utility.setResponseCodeAndMessageWithBody(httpResponseDTO, 200, "STATUS_200",swaggerContents);
     }
 
     public HttpResponseDTO fetchSwag(final String user) {

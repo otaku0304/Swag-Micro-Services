@@ -2,6 +2,8 @@ package com.swag.service;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
+import com.swag.dto.SwaggerDTO;
+import com.swag.utils.Utility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -48,9 +50,7 @@ public class SwagService {
                 .whereEqualTo(SwagConstant.USER, user);
         ApiFuture<QuerySnapshot> querySnapshotApiFuture = query.get();
         if (!querySnapshotApiFuture.get().isEmpty()) {
-            httpResponseDTO.setResponseCode(409);
-            httpResponseDTO.setResponseMessage("Swag content already exists for this user.");
-            return httpResponseDTO;
+            return Utility.setResponseCodeAndMessage(httpResponseDTO, 409, "Swag content already exists for this user.");
         }
         swagDTO.setSwagContent(swagContent);
         swagDTO.setUser(user);
@@ -61,10 +61,7 @@ public class SwagService {
                 SetOptions.merge()
         );
         writeResultApiFuture.get();
-        httpResponseDTO.setResponseCode(201);
-        httpResponseDTO.setResponseMessage("Swag content saved successfully.");
-        httpResponseDTO.setResponseBody(swagDTO);
-        return httpResponseDTO;
+        return Utility.setResponseCodeAndMessageWithBody(httpResponseDTO, 201, "Swag content saved successfully",swagDTO);
     }
 
 
@@ -73,26 +70,21 @@ public class SwagService {
         Query query = firestore.collection(SwagConstant.SWAG_COLLECTION).whereEqualTo(SwagConstant.USER, user.toLowerCase());
         ApiFuture<QuerySnapshot> querySnapshot = query.get();
         List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
-        if (!ObjectUtils.isEmpty(documents)) {
-            List<String> swagContentList = new ArrayList<>();
-            for (QueryDocumentSnapshot document : documents) {
-                String swagContent = document.getString(SwagConstant.SWAG_CONTENT);
-                swagContentList.add(swagContent);
-            }
-            httpResponseDTO.setResponseCode(201);
-            httpResponseDTO.setResponseMessage("Swag fetched successfully");
-            httpResponseDTO.setResponseBody(swagContentList);
-        } else {
-            httpResponseDTO.setResponseCode(404);
-            httpResponseDTO.setResponseMessage("User not found");
+        if (ObjectUtils.isEmpty(documents)) {
+            return Utility.setResponseCodeAndMessage(httpResponseDTO, 404, "STATUS_404: User not found");
         }
-        return httpResponseDTO;
+        List<String> swagContentList = new ArrayList<>();
+        for (QueryDocumentSnapshot document : documents) {
+            String swagContent = document.getString(SwagConstant.SWAG_CONTENT);
+            swagContentList.add(swagContent);
+        }
+        return Utility.setResponseCodeAndMessageWithBody(httpResponseDTO, 201, "Swag fetched successfully",swagContentList);
     }
 
-    public HttpResponseDTO saveSwagger(final SwagDTO swagDTO) {
+    public HttpResponseDTO saveSwagger(final SwaggerDTO swaggerDTO) {
         String url = swaggerServiceUrl + "/swagger/save";
         try {
-            ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.postForEntity(url, swagDTO, HttpResponseDTO.class);
+            ResponseEntity<HttpResponseDTO> responseEntity = restTemplate.postForEntity(url, swaggerDTO, HttpResponseDTO.class);
             return responseEntity.getBody();
         } catch (RestClientException ex) {
             throw new SwagServiceException(ex.getMessage(), ex);
@@ -120,12 +112,9 @@ public class SwagService {
             results.add(document.getReference().delete().get());
         }
         if (!ObjectUtils.isEmpty(results)) {
-            httpResponseDTO.setResponseCode(200);
-            httpResponseDTO.setResponseMessage("Swag content deleted successfully");
+            return Utility.setResponseCodeAndMessage(httpResponseDTO, 200, "Swag content deleted successfully");
         } else {
-            httpResponseDTO.setResponseCode(404);
-            httpResponseDTO.setResponseMessage("No matching swag content found for deletion to the user");
+            return Utility.setResponseCodeAndMessage(httpResponseDTO, 404, "No matching swag content found for deletion to the user");
         }
-        return httpResponseDTO;
     }
 }

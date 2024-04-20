@@ -1,5 +1,6 @@
 package com.swagger.utils;
 
+import com.swagger.dto.HttpResponseDTO;
 import com.swagger.entity.GenericDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
@@ -58,5 +59,18 @@ public class Utility {
     public static String spiltName(String name) {
         String[] fullName = name.split(" ");
         return fullName[0];
+    }
+
+    public static HttpResponseDTO setResponseCodeAndMessage(final HttpResponseDTO httpResponseDTO, final int responseCode, final String responseMessage) {
+        httpResponseDTO.setResponseCode(responseCode);
+        httpResponseDTO.setResponseMessage(responseMessage);
+        return httpResponseDTO;
+    }
+
+    public static HttpResponseDTO setResponseCodeAndMessageWithBody(final HttpResponseDTO httpResponseDTO, final int responseCode, final String responseMessage, final Object responseBody) {
+        httpResponseDTO.setResponseCode(responseCode);
+        httpResponseDTO.setResponseMessage(responseMessage);
+        httpResponseDTO.setResponseBody(responseBody);
+        return httpResponseDTO;
     }
 }

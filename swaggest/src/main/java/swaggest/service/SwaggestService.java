@@ -50,20 +50,14 @@ public class SwaggestService {
     public HttpResponseDTO fetch(final String user) {
         HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
         List<Swaggest> swaggestList = swaggestRepository.findByUser(user);
-        if (!swaggestList.isEmpty()) {
-            List<String> swaggestContents = new ArrayList<>();
-            for (Swaggest swaggest : swaggestList) {
-                swaggestContents.add(swaggest.getSwaggestContent());
-            }
-            httpResponseDTO.setResponseCode(201);
-            httpResponseDTO.setResponseMessage("STATUS_201");
-            httpResponseDTO.setResponseBody(swaggestContents);
-        } else {
-            httpResponseDTO.setResponseCode(404);
-            httpResponseDTO.setResponseMessage("STATUS_404: User not found");
-            httpResponseDTO.setResponseBody(new ArrayList<>());
+        if (swaggestList.isEmpty()) {
+            return Utility.setResponseCodeAndMessageWithBody(httpResponseDTO, 404, "STATUS_404: User not found",new ArrayList<>());
         }
-        return httpResponseDTO;
+        List<String> swaggestContents = new ArrayList<>();
+        for (Swaggest swaggest : swaggestList) {
+            swaggestContents.add(swaggest.getSwaggestContent());
+        }
+        return Utility.setResponseCodeAndMessageWithBody(httpResponseDTO, 201, "STATUS_201",swaggestContents);
     }
 
     public HttpResponseDTO callFetchSwag(final String user) {
