@@ -19,8 +19,6 @@ import swaggest.utils.Utility;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.util.ObjectUtils.isEmpty;
-
 @Service
 @Slf4j
 public class SwaggestService {
