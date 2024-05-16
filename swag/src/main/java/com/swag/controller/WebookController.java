@@ -14,6 +14,7 @@ public class WebookController {
     @PostMapping
     public ResponseEntity<String> test(@RequestBody String requestBody){
         System.out.println("Hello"+ requestBody);
+        System.out.println("Bye");
         return new ResponseEntity<>(requestBody, HttpStatus.OK);
     }
 }
