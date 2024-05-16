@@ -15,6 +15,7 @@ public class WebookController {
     public ResponseEntity<String> test(@RequestBody String requestBody){
         System.out.println("Hello"+ requestBody);
         System.out.println("Bye");
+        System.out.println("GoodBye");
         return new ResponseEntity<>(requestBody, HttpStatus.OK);
     }
 }
