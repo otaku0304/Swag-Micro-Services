@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class WebookController {
 
     @PostMapping
-    public ResponseEntity<String> test(@RequestBody String requestBody){
-        System.out.println("Hello"+ requestBody);
+    public ResponseEntity<String> test(@RequestBody String payload){
+        System.out.println("Hello"+ payload);
         System.out.println("Bye");
         System.out.println("GoodBye");
-        return new ResponseEntity<>(requestBody, HttpStatus.OK);
+        return new ResponseEntity<>(payload, HttpStatus.OK);
     }
 }
