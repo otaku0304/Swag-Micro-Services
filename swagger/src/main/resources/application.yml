@@ -2,5 +2,10 @@ spring:
   application:
     name: swagger-service
 
+  data:
+    mongodb:
+      database: Cluster0
+      uri: mongodb+srv://saiannam:rMBkdT0SlOzHytlJ@Cluster0.w6jwbm1.mongodb.net/
+
 server:
   port: 8082
