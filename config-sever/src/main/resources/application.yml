@@ -1,3 +1,6 @@
+server:
+  port: 8888
+
 spring:
   application:
     name: config
@@ -7,6 +10,3 @@ spring:
       server:
         git:
           uri: https://github.com/otaku0304/config-repo
-server:
-  port: 8888
-
