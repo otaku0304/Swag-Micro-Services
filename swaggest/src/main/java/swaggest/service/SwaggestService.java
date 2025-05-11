@@ -22,9 +22,9 @@ import java.util.List;
 @Service
 @Slf4j
 public class SwaggestService {
-    @Value("${swag.service.url}")
+    @Value("${swag.url}")
     private String swagServiceUrl;
-    @Value("${swagger.service.url}")
+    @Value("${swagger.url}")
     private String swaggerServiceUrl;
     private final RestTemplate restTemplate;
     private final SwaggestRepository swaggestRepository;

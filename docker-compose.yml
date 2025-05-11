@@ -1,0 +1,41 @@
+version: '3'
+services:
+  # Eureka Server
+  eureka-server:
+    image: discovery
+    container_name: discovery
+    ports:
+      - "8761:8761"
+#    environment:
+#      - spring.profiles.active=docker
+#    networks:
+#      - microservice-network
+
+  # Config Server
+  config-server:
+    image: config
+    container_name: config-server
+    ports:
+      - "8888:8888"
+#    environment:
+#      - spring.profiles.active=docker
+#    networks:
+#      - microservice-network
+
+#  # Swag Microservice
+#  swag-microservice:
+#    image: swag-microservice-image  # Replace with your microservice image
+#    container_name: swag-microservice
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      - spring.cloud.config.uri=http://config-server:8888  # Config server URL inside Docker network
+#      - spring.cloud.discovery.client.service-url.defaultZone=http://eureka-server:8761/eureka/
+#    depends_on:
+#      - eureka-server  # Ensures Eureka server starts before the microservice
+#    networks:
+#      - microservice-network
+
+networks:
+  microservice-network:
+    driver: bridge

@@ -20,9 +20,9 @@ import java.util.List;
 
 @Service
 public class SwaggerService {
-    @Value("${swag.service.url}")
+    @Value("${swag.url}")
     private String swagServiceUrl;
-    @Value("${swaggest.service.url}")
+    @Value("${swaggest.appName}")
     private String swaggestServiceUrl;
     private final RestTemplate restTemplate;
     private final SwaggerRepository swaggerRepository;

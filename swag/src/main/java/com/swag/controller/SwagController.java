@@ -2,7 +2,6 @@ package com.swag.controller;
 
 import com.swag.dto.SwaggerDTO;
 import com.swag.service.SwagService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.swag.dto.HttpResponseDTO;
@@ -20,8 +19,7 @@ public class SwagController {
 
     private final SwagService swagService;
 
-    @Autowired
-    private SwagController(SwagService swagService) {
+    public SwagController(SwagService swagService) {
         this.swagService = swagService;
     }
 

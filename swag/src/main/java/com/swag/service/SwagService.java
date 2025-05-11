@@ -28,9 +28,9 @@ import java.util.concurrent.ExecutionException;
 @Service
 @Slf4j
 public class SwagService {
-    @Value("${swaggest.service.appName}")
+    @Value("${swaggest.appName}")
     private String swaggestServiceAppName;
-    @Value("${swagger.service.url}")
+    @Value("${swagger.url}")
     private String swaggerServiceUrl;
     private final Firestore firestore;
     @LoadBalanced

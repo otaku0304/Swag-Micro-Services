@@ -1,27 +1,9 @@
 spring:
   application:
-    name: swaggest-service
-
-  servlet:
-    multipart:
-      max-file-size: 5MB
-      max-request-size: 15MB
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/swaggest?user=root
-    username: root
-    password: root
-    initialization-mode: always
-  jpa:
-    show-sql: true
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-    generate-ddl: true
-    hibernate:
-      ddl-auto: update
-    properties:
-      javax:
-        persistence:
-          validation:
-            mode: none
+    name: swaggest
+  config:
+    import:
+      configserver:http://localhost:8888
 
 server:
   port: 8083
