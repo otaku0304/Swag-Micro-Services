@@ -12,10 +12,4 @@ public class SwaggestApplication {
         SpringApplication.run(SwaggestApplication.class, args);
     }
 
-//    @Bean
-//    @LoadBalanced
-//    public RestTemplate getRestTemplate() {
-//        return new RestTemplate();
-//    }
-
 }

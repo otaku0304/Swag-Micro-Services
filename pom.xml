@@ -11,7 +11,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>config-sever</module>
+        <module>config-server</module>
         <module>discovery</module>
         <module>swag</module>
         <module>swagger</module>
@@ -58,6 +58,13 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring.boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
 
                 <plugin>

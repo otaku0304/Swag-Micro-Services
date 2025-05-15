@@ -1,41 +1,71 @@
-version: '3'
 services:
-  # Eureka Server
-  eureka-server:
-    image: discovery
+  discovery:
+    build:
+      context: ./discovery
     container_name: discovery
     ports:
       - "8761:8761"
-#    environment:
-#      - spring.profiles.active=docker
-#    networks:
-#      - microservice-network
+    networks:
+      - microservice-net
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://127.0.0.1:8761/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
 
-  # Config Server
-  config-server:
-    image: config
-    container_name: config-server
+  config:
+    build:
+      context: ./config-server
+    container_name: config
     ports:
       - "8888:8888"
-#    environment:
-#      - spring.profiles.active=docker
-#    networks:
-#      - microservice-network
-
-#  # Swag Microservice
-#  swag-microservice:
-#    image: swag-microservice-image  # Replace with your microservice image
-#    container_name: swag-microservice
-#    ports:
-#      - "8080:8080"
-#    environment:
-#      - spring.cloud.config.uri=http://config-server:8888  # Config server URL inside Docker network
-#      - spring.cloud.discovery.client.service-url.defaultZone=http://eureka-server:8761/eureka/
-#    depends_on:
-#      - eureka-server  # Ensures Eureka server starts before the microservice
-#    networks:
-#      - microservice-network
+    networks:
+      - microservice-net
+    depends_on:
+      discovery:
+        condition: service_healthy
+    restart: on-failure
 
 networks:
-  microservice-network:
-    driver: bridge
+  microservice-net:
+
+
+#  swag:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: swag
+#    ports:
+#      - "8081:8081"
+#    networks:
+#      - microservice-net
+#    depends_on:
+#      - discovery
+#      - config
+#
+#  swagger:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: swagger
+#    ports:
+#      - "8082:8082"
+#    networks:
+#      - microservice-net
+#    depends_on:
+#      - discovery
+#      - config
+#
+#  swaggest:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: swaggest
+#    ports:
+#      - "8083:8083"
+#    networks:
+#      - microservice-net
+#    depends_on:
+#      - discovery
+#      - config

@@ -5,7 +5,7 @@ FROM openjdk:21-jdk-slim
 WORKDIR /app
 
 # Copy the JAR file into the container
-COPY target/your-microservice.jar app.jar
+COPY --chown=1000:1000 target/your-microservice.jar app.jar
 
 # Expose the port the app runs on
 EXPOSE 8083
